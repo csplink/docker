@@ -1,0 +1,71 @@
+name: ubuntu_ci->22.04
+
+on: 
+  push:
+  pull_request:
+    paths:
+      - 'ubuntu_ci/22.04/**'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set up qemu
+        uses: docker/setup-qemu-action@v2
+
+      - name: set up docker buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: login to docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # 中国镜像版本
+      - name: build china
+        uses: docker/build-push-action@v3
+        if: github.ref_name != 'master'
+        with:
+          context: ubuntu_ci/22.04
+          file: ./ubuntu_ci/22.04/Dockerfile
+          build-args: |
+            LOCATION=china
+          tags: csplink/ubuntu_ci:22.04-china
+
+      - name: build and push china
+        uses: docker/build-push-action@v3
+        if: github.ref_name == 'master'
+        with:
+          push: true
+          context: ubuntu_ci/22.04
+          file: ./ubuntu_ci/22.04/Dockerfile
+          build-args: |
+            LOCATION=china
+          tags: csplink/ubuntu_ci:22.04-china
+
+      # 美国镜像版本
+      - name: build us
+        uses: docker/build-push-action@v3
+        if: github.ref_name != 'master'
+        with:
+          context: ubuntu_ci/22.04
+          file: ./ubuntu_ci/22.04/Dockerfile
+          build-args: |
+            LOCATION=us
+          tags: csplink/ubuntu_ci:22.04-us
+
+      - name: build and push us
+        uses: docker/build-push-action@v3
+        if: github.ref_name == 'master'
+        with:
+          push: true
+          context: ubuntu_ci/22.04
+          file: ./ubuntu_ci/22.04/Dockerfile
+          build-args: |
+            LOCATION=us
+          tags: csplink/ubuntu_ci:22.04-us
