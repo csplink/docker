@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
-          context: ./ubuntu_ci/16.04
+          context: .
           file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=china
@@ -38,7 +38,7 @@ jobs:
         if: github.ref_name == 'master'
         with:
           push: true
-          context: ./ubuntu_ci/16.04
+          context: .
           file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=china
@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
-          context: ./ubuntu_ci/16.04
+          context: .
           file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=us
@@ -60,7 +60,7 @@ jobs:
         if: github.ref_name == 'master'
         with:
           push: true
-          context: ./ubuntu_ci/16.04
+          context: .
           file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=us
