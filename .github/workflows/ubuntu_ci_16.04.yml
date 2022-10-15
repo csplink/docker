@@ -17,6 +17,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: echo
         run: 
           echo ${{ github.path }}
           echo ${{ github.base_ref }}
