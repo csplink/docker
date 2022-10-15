@@ -2,9 +2,11 @@ name: ubuntu_ci->16.04
 
 on: 
   push:
+    paths:
+      - 'ubuntu_ci/16.04/**'
   pull_request:
-    paths-ignore:
-      - '!ubuntu_ci/16.04/**'
+    paths:
+      - 'ubuntu_ci/16.04/**'
 
 jobs:
   docker:

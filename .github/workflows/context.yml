@@ -2,9 +2,11 @@ name: context
 
 on: 
   push:
+    paths:
+      - '.github/workflows/*.yml'
   pull_request:
-    paths-ignore:
-      - '!.github/workflows/*.yml'
+    paths:
+      - '.github/workflows/*.yml'
 
 jobs:
   echo_context:
