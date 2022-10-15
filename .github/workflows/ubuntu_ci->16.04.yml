@@ -10,20 +10,24 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up QEMU
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set up qemu
         uses: docker/setup-qemu-action@v2
 
-      - name: Set up Docker Buildx
+      - name: set up docker buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub
+      - name: login to docker hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       # 中国镜像版本
-      - name: Build china
+      - name: build china
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
@@ -33,7 +37,7 @@ jobs:
             LOCATION=china
           tags: csplink/ubuntu_ci:16.04-china
 
-      - name: Build and push china
+      - name: build and push china
         uses: docker/build-push-action@v3
         if: github.ref_name == 'master'
         with:
@@ -45,7 +49,7 @@ jobs:
           tags: csplink/ubuntu_ci:16.04-china
 
       # 美国镜像版本
-      - name: Build us
+      - name: build us
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
@@ -55,7 +59,7 @@ jobs:
             LOCATION=us
           tags: csplink/ubuntu_ci:16.04-us
 
-      - name: Build and push us
+      - name: build and push us
         uses: docker/build-push-action@v3
         if: github.ref_name == 'master'
         with:
