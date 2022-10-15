@@ -7,10 +7,10 @@ RUN set
 
 # 换源
 RUN if [ "$LOCATION" = "china" ]; then \
-        sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; \
-        sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; \
-        # sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; \
-        # sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; \
+        # sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; \
+        # sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; \
+        sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; \
+        sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; \
     elif [ "$LOCATION" = "us" ]; then \
         echo "this action is not required"; \
     fi
@@ -25,7 +25,7 @@ RUN apt install -y tree
 RUN apt install -y lbzip2 bzip2
 RUN apt install -y git
 RUN apt install -y xz-utils
-RUN apt install -y tzdata
+RUN DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
 
 # 设置时区
 RUN if [ "$LOCATION" = "china" ]; then \
