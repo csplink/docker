@@ -36,7 +36,7 @@ RUN if [ "$LOCATION" = "china" ]; then \
     fi
 
 # python相关
-RUN apt install -y python python-pip
+# RUN apt install -y python python-pip
 RUN apt install -y python3 python3-pip
 
 ## pip源
