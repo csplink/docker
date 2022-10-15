@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'ubuntu_ci/18.04/**'
+      - '.github/workflows/ubuntu_ci->18.04.yml'
   pull_request:
     paths:
       - 'ubuntu_ci/18.04/**'
+      - '.github/workflows/ubuntu_ci->18.04.yml'
 
 jobs:
   docker:
