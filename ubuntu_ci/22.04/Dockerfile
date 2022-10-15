@@ -62,6 +62,6 @@ RUN mkdir /var/lib/apt/lists/partial
 
 # 结束
 RUN cat /etc/issue
-RUN python -V
+# RUN python -V
 RUN python3 -V
 
