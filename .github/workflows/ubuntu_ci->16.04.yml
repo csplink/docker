@@ -27,8 +27,8 @@ jobs:
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
-          context: ubuntu_ci/16.04
-          file: ubuntu_ci/16.04/Dockerfile
+          context: ./ubuntu_ci/16.04
+          file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=china
           tags: csplink/ubuntu_ci:16.04-china
@@ -38,8 +38,8 @@ jobs:
         if: github.ref_name == 'master'
         with:
           push: true
-          context: ubuntu_ci/16.04
-          file: ubuntu_ci/16.04/Dockerfile
+          context: ./ubuntu_ci/16.04
+          file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=china
           tags: csplink/ubuntu_ci:16.04-china
@@ -49,15 +49,15 @@ jobs:
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
-          context: ubuntu_ci/16.04
-          file: ubuntu_ci/16.04/Dockerfile
+          context: ./ubuntu_ci/16.04
+          file: ./ubuntu_ci/16.04/Dockerfile
           build-args: |
             LOCATION=us
           tags: csplink/ubuntu_ci:16.04-us
 
       - name: Build and push us
-        uses: docker/build-push-action@v3
-        if: github.ref_name == 'master'
+        uses: ./docker/build-push-action@v3
+        if: ./github.ref_name == 'master'
         with:
           push: true
           context: ubuntu_ci/16.04
