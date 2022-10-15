@@ -1,14 +1,14 @@
-name: ubuntu_ci->20.04
+name: ubuntu_ci-20.04
 
 on: 
   push:
     paths:
       - 'ubuntu_ci/20.04/**'
-      - '.github/workflows/ubuntu_ci->20.04.yml'
+      - '.github/workflows/ubuntu_ci-20.04.yml'
   pull_request:
     paths:
       - 'ubuntu_ci/20.04/**'
-      - '.github/workflows/ubuntu_ci->20.04.yml'
+      - '.github/workflows/ubuntu_ci-20.04.yml'
 
 jobs:
   docker:
