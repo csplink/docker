@@ -3,8 +3,8 @@ name: context
 on: 
   push:
   pull_request:
-    paths:
-      - '.github/workflows/*.yml'
+    paths-ignore:
+      - '!.github/workflows/*.yml'
 
 jobs:
   echo_context:

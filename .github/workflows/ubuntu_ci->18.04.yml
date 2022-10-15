@@ -3,8 +3,8 @@ name: ubuntu_ci->18.04
 on: 
   push:
   pull_request:
-    paths:
-      - 'ubuntu_ci/18.04/**'
+    paths-ignore:
+      - '!ubuntu_ci/18.04/**'
 
 jobs:
   docker:
