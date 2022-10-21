@@ -1,4 +1,4 @@
-name: ubuntu_ci-16.04
+name: rt_smart
 
 on: 
   push:
