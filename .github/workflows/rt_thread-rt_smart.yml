@@ -34,8 +34,8 @@ jobs:
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
-          context: rt_thread/rt-smart
-          file: ./rt_thread/rt-smart/Dockerfile
+          context: rt_thread/rt_smart
+          file: ./rt_thread/rt_smart/Dockerfile
           tags: csplink/rt_thread:rt_smart
 
       - name: build and push
@@ -43,6 +43,6 @@ jobs:
         if: github.ref_name == 'master'
         with:
           push: true
-          context: rt_thread/rt-smart
-          file: ./rt_thread/rt-smart/Dockerfile
+          context: rt_thread/rt_smart
+          file: ./rt_thread/rt_smart/Dockerfile
           tags: csplink/rt_thread:rt_smart
