@@ -30,46 +30,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # 中国镜像版本
-      - name: build china
+      - name: build 
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
           context: ubuntu_ci/18.04
           file: ./ubuntu_ci/18.04/Dockerfile
-          build-args: |
-            LOCATION=china
-          tags: csplink/ubuntu_ci:18.04-china
+          tags: csplink/ubuntu_ci:18.04
 
-      - name: build and push china
+      - name: build and push
         uses: docker/build-push-action@v3
         if: github.ref_name == 'master'
         with:
           push: true
           context: ubuntu_ci/18.04
           file: ./ubuntu_ci/18.04/Dockerfile
-          build-args: |
-            LOCATION=china
-          tags: csplink/ubuntu_ci:18.04-china
-
-      # 美国镜像版本
-      - name: build us
-        uses: docker/build-push-action@v3
-        if: github.ref_name != 'master'
-        with:
-          context: ubuntu_ci/18.04
-          file: ./ubuntu_ci/18.04/Dockerfile
-          build-args: |
-            LOCATION=us
-          tags: csplink/ubuntu_ci:18.04-us
-
-      - name: build and push us
-        uses: docker/build-push-action@v3
-        if: github.ref_name == 'master'
-        with:
-          push: true
-          context: ubuntu_ci/18.04
-          file: ./ubuntu_ci/18.04/Dockerfile
-          build-args: |
-            LOCATION=us
-          tags: csplink/ubuntu_ci:18.04-us
+          tags: csplink/ubuntu_ci:18.04
