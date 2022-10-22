@@ -1,0 +1,48 @@
+name: rt_thread-rt_smart
+
+on: 
+  push:
+    paths:
+      - 'rt_thread/rt_smart/**'
+      - '.github/workflows/rt_thread-rt_smart.yml'
+  pull_request:
+    paths:
+      - 'rt_thread/rt_smart/**'
+      - '.github/workflows/rt_thread-rt_smart.yml'
+      
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set up qemu
+        uses: docker/setup-qemu-action@v2
+
+      - name: set up docker buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: login to docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: build
+        uses: docker/build-push-action@v3
+        if: github.ref_name != 'master'
+        with:
+          context: rt_thread/rt-smart
+          file: ./rt_thread/rt-smart/Dockerfile
+          tags: csplink/rt_thread:rt_smart
+
+      - name: build and push
+        uses: docker/build-push-action@v3
+        if: github.ref_name == 'master'
+        with:
+          push: true
+          context: rt_thread/rt-smart
+          file: ./rt_thread/rt-smart/Dockerfile
+          tags: csplink/rt_thread:rt_smart

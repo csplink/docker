@@ -1,4 +1,4 @@
-FROM csplink/ubuntu_ci:22.04-us
+FROM csplink/ubuntu_ci:22.04
 
 RUN set -x
 
