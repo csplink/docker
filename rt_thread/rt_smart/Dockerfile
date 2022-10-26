@@ -1,11 +1,10 @@
 FROM csplink/ubuntu_ci:22.04
 
 RUN set -x
+RUN set
 
 RUN apt update
 RUN apt upgrade -y
-RUN apt-get install -qq libncurses5-dev lib32z1 > /dev/null
-RUN apt-get install -y u-boot-tools zlib1g-dev dosfstools mtools openssh-server
 RUN apt-get install -y scons
 RUN apt-get install -y qemu
 RUN apt-get install -y qemu-system-aarch64 qemu-system-arm qemu-system-riscv64
