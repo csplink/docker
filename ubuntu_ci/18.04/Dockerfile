@@ -1,9 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
 ARG LOCATION
 
 RUN set -x
 RUN set
+
+ARG user=csplink
 
 # 换源
 # RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
@@ -21,6 +23,7 @@ RUN apt install -y tree
 RUN apt install -y lbzip2 bzip2
 RUN apt install -y git
 RUN apt install -y xz-utils
+RUN apt install -y openssh-server
 RUN DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
 
 # 设置时区
@@ -31,17 +34,33 @@ RUN TZ=Asia/Shanghai && \
 RUN apt install -y python python-pip
 RUN apt install -y python3 python3-pip
 
-## pip源
+# pip源
 RUN mkdir -p /root/.pip/
 COPY ./conf/pip.conf /root/.pip/pip.conf
 COPY ./conf/pydistutils.cfg /root/.pydistutils.cfg
+
+# 添加用户/密码
+RUN useradd --create-home --no-log-init --shell /bin/bash ${user} \
+    && usermod -aG sudo ${user} \
+    && echo "${user}:${user}" | chpasswd
 
 # 清理缓存
 RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir /var/lib/apt/lists/partial
 
+# 自启动ssh
+COPY ./start_ssh.sh /root/start_ssh.sh
+RUN chmod +x /root/start_ssh.sh
+RUN printf "\n# startup run\n" >> /root/.bashrc
+RUN printf "if [ -f /root/start_ssh.sh ]; then\n" >> /root/.bashrc
+RUN printf "    ./root/start_ssh.sh\n" >> /root/.bashrc
+RUN printf "fi\n" >> /root/.bashrc
+
 # 结束
 RUN cat /etc/issue
 RUN python -V
 RUN python3 -V
+
+# 暴露端口
+EXPOSE 22 
