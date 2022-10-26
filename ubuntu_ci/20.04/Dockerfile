@@ -7,12 +7,6 @@ RUN set
 
 ARG user=csplink
 
-# 换源
-# RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
-# RUN sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
-RUN sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
-RUN sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
-
 # 安装基础软件
 RUN apt update
 RUN apt upgrade -y
@@ -56,6 +50,13 @@ RUN printf "\n# startup run\n" >> /root/.bashrc
 RUN printf "if [ -f /root/start_ssh.sh ]; then\n" >> /root/.bashrc
 RUN printf "    ./root/start_ssh.sh\n" >> /root/.bashrc
 RUN printf "fi\n" >> /root/.bashrc
+
+# 换源
+RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak
+# RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
+# RUN sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
+RUN sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
+RUN sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
 
 # 结束
 RUN cat /etc/issue
