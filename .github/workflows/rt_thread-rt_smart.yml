@@ -9,7 +9,10 @@ on:
     paths:
       - 'rt_thread/rt_smart/**'
       - '.github/workflows/rt_thread-rt_smart.yml'
-      
+  workflow_dispatch:
+  repository_dispatch:
+    types: [update-ubuntu_ci-22.04]
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -46,3 +49,8 @@ jobs:
           context: rt_thread/rt_smart
           file: ./rt_thread/rt_smart/Dockerfile
           tags: csplink/rt_thread:rt_smart
+
+      - name: trigger repository_dispatch
+        if: github.ref_name == 'master'
+        run: |
+          curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/${{ github.repository }}/dispatches -d '{"event_type":"update-rt_thread-rt_smart","client_payload":{"text": "update rt_thread rt_smart"}}'
