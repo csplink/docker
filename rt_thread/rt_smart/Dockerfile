@@ -6,8 +6,15 @@ RUN set
 RUN apt update
 RUN apt upgrade -y
 RUN apt-get install -y scons
-RUN apt-get install -y qemu
-RUN apt-get install -y qemu-system-aarch64 qemu-system-arm qemu-system-riscv64
+RUN apt-get install -y ninja-build
+RUN apt-get install -y pkg-config
+RUN apt-get install -y libglib2.0-dev
+RUN apt-get install -y libpixman-1-dev
+
+RUN mkdir -p /tmp/qemu
+RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C /tmp/qemu
+RUN cd /tmp/qemu/qemu-7.1.0 && ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu && make -j$(nproc) && make install
+RUN cd / && rm -rf /tmp/qemu
 
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
