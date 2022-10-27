@@ -13,8 +13,12 @@ RUN apt-get install -y libpixman-1-dev
 
 RUN mkdir -p /tmp/qemu
 RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C /tmp/qemu
-RUN cd /tmp/qemu/qemu-7.1.0 && ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu && make && make install
-RUN cd / && rm -rf /tmp/qemu
+RUN cd /tmp/qemu/qemu-7.1.0
+RUN ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu
+RUN make
+RUN make install
+RUN cd /
+RUN rm -rf /tmp/qemu
 
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
