@@ -15,7 +15,7 @@ RUN mkdir -p /tmp/qemu
 RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C /tmp/qemu
 WORKDIR /tmp/qemu/qemu-7.1.0
 RUN ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu
-RUN make
+RUN make -j$(nproc)
 RUN make install
 WORKDIR /
 RUN rm -rf /tmp/qemu
