@@ -23,7 +23,6 @@ RUN apt install -y tree
 RUN apt install -y lbzip2 bzip2
 RUN apt install -y git
 RUN apt install -y xz-utils
-RUN apt install -y openssh-server
 RUN DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
 
 # 设置时区
@@ -38,6 +37,9 @@ RUN apt install -y python3 python3-pip
 RUN mkdir -p /root/.pip/
 COPY ./conf/pip.conf /root/.pip/pip.conf
 COPY ./conf/pydistutils.cfg /root/.pydistutils.cfg
+
+# SSH
+RUN apt install -y openssh-server
 
 # 添加用户/密码
 RUN useradd --create-home --no-log-init --shell /bin/bash ${user} \
