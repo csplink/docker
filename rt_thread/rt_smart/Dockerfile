@@ -14,13 +14,13 @@ RUN apt-get install -y libglib2.0-dev
 RUN apt-get install -y libpixman-1-dev
 
 USER ${user}
+
 RUN mkdir -p ~/tmp/qemu
 RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C ~/tmp/qemu
 WORKDIR /home/${user}/tmp/qemu/qemu-7.1.0
 RUN ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu
 RUN make -j$(nproc)
-RUN make install
-WORKDIR /home/${user}
+RUN echo ${user} | sudo -S make install
 RUN rm -rf ~/tmp
 
 RUN mkdir -p ~/.csplink/toolchains
@@ -29,9 +29,9 @@ RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
 
 # 清理缓存
-RUN apt clean
-RUN rm -rf /var/lib/apt/lists/*
-RUN mkdir /var/lib/apt/lists/partial
+RUN echo ${user} | sudo -S apt clean
+RUN echo ${user} | sudo -S rm -rf /var/lib/apt/lists/*
+RUN echo ${user} | sudo -S mkdir /var/lib/apt/lists/partial
 
 # 结束
 RUN cat /etc/issue
@@ -45,3 +45,4 @@ RUN qemu-system-arm -version
 RUN qemu-system-riscv64 -version
 
 USER root
+WORKDIR /
