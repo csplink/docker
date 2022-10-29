@@ -22,6 +22,7 @@ RUN make install
 WORKDIR /
 RUN rm -rf /tmp/qemu
 
+RUN mkdir -p /home/${user}/.csplink/toolchains
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
