@@ -13,19 +13,20 @@ RUN apt-get install -y pkg-config
 RUN apt-get install -y libglib2.0-dev
 RUN apt-get install -y libpixman-1-dev
 
-RUN mkdir -p /tmp/qemu
-RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C /tmp/qemu
-WORKDIR /tmp/qemu/qemu-7.1.0
+USER ${user}
+RUN mkdir -p ~/tmp/qemu
+RUN curl -s https://download.qemu.org/qemu-7.1.0.tar.xz | tar xJf - -C ~/tmp/qemu
+WORKDIR /home/${user}/tmp/qemu/qemu-7.1.0
 RUN ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu
 RUN make -j$(nproc)
 RUN make install
-WORKDIR /
-RUN rm -rf /tmp/qemu
+WORKDIR /home/${user}
+RUN rm -rf ~/tmp
 
-RUN mkdir -p /home/${user}/.csplink/toolchains
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
+RUN mkdir -p ~/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
 
 # 清理缓存
 RUN apt clean
@@ -36,9 +37,11 @@ RUN mkdir /var/lib/apt/lists/partial
 RUN cat /etc/issue
 RUN python3 -V
 RUN scons --version
-RUN /home/${user}/.csplink/toolchains/arm-linux-musleabi_for_x86_64-pc-linux-gnu/bin/arm-linux-musleabi-gcc -v
-RUN /home/${user}/.csplink/toolchains/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/aarch64-linux-musleabi-gcc -v
-RUN /home/${user}/.csplink/toolchains/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc -v
+RUN ~/.csplink/toolchains/arm-linux-musleabi_for_x86_64-pc-linux-gnu/bin/arm-linux-musleabi-gcc -v
+RUN ~/.csplink/toolchains/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/aarch64-linux-musleabi-gcc -v
+RUN ~/.csplink/toolchains/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc -v
 RUN qemu-system-aarch64 -version
 RUN qemu-system-arm -version
 RUN qemu-system-riscv64 -version
+
+USER root
