@@ -3,6 +3,8 @@ FROM csplink/ubuntu_ci:22.04
 RUN set -x
 RUN set
 
+ARG user=csplink
+
 RUN apt update
 RUN apt upgrade -y
 RUN apt-get install -y scons
@@ -20,9 +22,9 @@ RUN make install
 WORKDIR /
 RUN rm -rf /tmp/qemu
 
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /opt
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C /home/${user}/.csplink/toolchains
 
 # 清理缓存
 RUN apt clean
@@ -33,9 +35,9 @@ RUN mkdir /var/lib/apt/lists/partial
 RUN cat /etc/issue
 RUN python3 -V
 RUN scons --version
-RUN /opt/arm-linux-musleabi_for_x86_64-pc-linux-gnu/bin/arm-linux-musleabi-gcc -v
-RUN /opt/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/aarch64-linux-musleabi-gcc -v
-RUN /opt/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc -v
+RUN /home/${user}/.csplink/toolchains/arm-linux-musleabi_for_x86_64-pc-linux-gnu/bin/arm-linux-musleabi-gcc -v
+RUN /home/${user}/.csplink/toolchains/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/aarch64-linux-musleabi-gcc -v
+RUN /home/${user}/.csplink/toolchains/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux-musl-gcc -v
 RUN qemu-system-aarch64 -version
 RUN qemu-system-arm -version
 RUN qemu-system-riscv64 -version
