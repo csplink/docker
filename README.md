@@ -17,7 +17,7 @@ docker build -f ./Dockerfile -t test:tag .
 docker run --name test -p 10000:22 -itd test:tag
 ```
 
-> 挂载芯片
+> 挂载目录
 
 ```shell
 docker run --name test -p 10000:22 -v ~:/home/csplink -itd test:tag
