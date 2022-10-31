@@ -21,12 +21,13 @@ WORKDIR /home/${user}/tmp/qemu/qemu-7.1.0
 RUN ./configure --target-list=arm-softmmu,aarch64-softmmu,riscv64-softmmu
 RUN make -j$(nproc)
 RUN echo ${user} | sudo -S make install
+WORKDIR /home/${user}
 RUN rm -rf ~/tmp
 
 RUN mkdir -p ~/.csplink/toolchains
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/arm-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
 RUN curl -s http://117.143.63.254:9012/www/rt-smart/aarch64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
-RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
+RUN curl -s http://117.143.63.254:9012/www/rt-smart/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu_latest.tar.bz2 | tar xjf - -C ~/.csplink/toolchains
 
 # 清理缓存
 RUN echo ${user} | sudo -S apt clean
