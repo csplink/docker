@@ -20,6 +20,7 @@ RUN git submodule update --init
 RUN make build
 RUN ./scripts/get.sh __local__ __install_only__
 RUN /bin/bash -c "source ~/.xmake/profile"
+WORKDIR /home/${user}
 RUN rm -rf ~/tmp
 
 RUN mkdir -p ~/.csplink/toolchains
