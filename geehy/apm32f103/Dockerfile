@@ -12,9 +12,9 @@ RUN apt-get install -qq libncurses5-dev lib32z1
 USER ${user}
 
 RUN mkdir -p ~/tmp \
-    && ~/tmp \
+    && cd ~/tmp \
     && git clone https://github.com/xmake-io/xmake.git \
-    && ~/tmp/xmake \
+    && cd ~/tmp/xmake \
     && git checkout tags/v2.7.2 -b v2.7.2-branch \
     && git submodule update --init \
     && make build \
