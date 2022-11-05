@@ -12,6 +12,7 @@ RUN apt-get install -y ninja-build
 RUN apt-get install -y pkg-config
 RUN apt-get install -y libglib2.0-dev
 RUN apt-get install -y libpixman-1-dev
+RUN apt-get install -qq libncurses5-dev lib32z1
 
 RUN mkdir -p /tmp \
     && cd /tmp \
