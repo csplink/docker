@@ -1,31 +1,42 @@
 # docker
-csplink中常用的DockerFile
+DockerFile commonly used in csplink
 
-## 构建命令
+## Build
 
-> 在相应目录下：
+> in the corresponding directory:
 
 ```shell
 docker build -f ./Dockerfile -t test:tag .
 ```
+## Run
 
-## 运行命令
-
-> 无挂载目录
+### no mounted directory
 
 ```shell
 docker run --name test -p 10000:22 -itd test:tag
 ```
-
-> 挂载目录
+### mounted directory
 
 ```shell
 docker run --name test -p 10000:22 -v ~:/home/csplink -itd test:tag
 ```
-
-## 进入终端
+## Exec
 
 ```shell
 docker exec -it test /bin/bash
 ```
+### Mirror
+> sometimes we need to switch to the mirror of the local service
 
+#### huaweicloud
+
+```shell
+RUN sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
+RUN sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list; 
+```
+#### aliyun
+
+```shell
+RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
+RUN sed -i 's/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list; 
+```
