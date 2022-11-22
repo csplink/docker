@@ -24,7 +24,6 @@ RUN mkdir -p ~/tmp \
     && rm -rf ~/tmp
 
 USER root
-WORKDIR /
 
 RUN curl -s https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 | tar xjf - -C /opt
 
@@ -43,4 +42,3 @@ RUN opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc -v
 RUN opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gdb -v
 
 USER root
-WORKDIR /

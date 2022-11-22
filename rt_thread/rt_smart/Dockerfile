@@ -43,6 +43,3 @@ RUN opt/riscv64-linux-musleabi_for_x86_64-pc-linux-gnu/bin/riscv64-unknown-linux
 RUN qemu-system-aarch64 -version
 RUN qemu-system-arm -version
 RUN qemu-system-riscv64 -version
-
-USER root
-WORKDIR /
