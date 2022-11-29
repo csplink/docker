@@ -28,11 +28,6 @@ RUN TZ=Asia/Shanghai && \
 # RUN apt install -y python python-pip
 RUN apt install -y python3 python3-pip
 
-# pip
-RUN mkdir -p /root/.pip/
-COPY ./conf/pip.conf /root/.pip/pip.conf
-COPY ./conf/pydistutils.cfg /root/.pydistutils.cfg
-
 # SSH
 RUN apt install -y openssh-server
 
