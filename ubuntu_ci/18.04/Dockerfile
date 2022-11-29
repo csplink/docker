@@ -17,6 +17,7 @@ RUN apt install -y tree
 RUN apt install -y lbzip2 bzip2
 RUN apt install -y git
 RUN apt install -y xz-utils
+RUN apt install -y bash-completion
 RUN DEBIAN_FRONTEND="noninteractive" apt -y install tzdata
 
 # 设置时区
@@ -48,6 +49,7 @@ RUN mkdir /var/lib/apt/lists/partial
 # 自启动ssh
 COPY ./start_ssh.sh /root/start_ssh.sh
 RUN chmod +x /root/start_ssh.sh
+RUN printf "\nsource /usr/share/bash-completion/bash_completion\n" >> /root/.bashrc
 RUN printf "\n# startup run\n" >> /root/.bashrc
 RUN printf "if [ -f /root/start_ssh.sh ]; then\n" >> /root/.bashrc
 RUN printf "    ./root/start_ssh.sh\n" >> /root/.bashrc
