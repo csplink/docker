@@ -46,7 +46,7 @@ RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/t
 RUN unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
 RUN chmod u+rw ~/.poshthemes/*.omp.*
 RUN rm ~/.poshthemes/themes.zip
-RUN printf "eval \"\$(oh-my-posh --init --shell bash --config ~/.poshthemes/amro.omp.json)\"" >> ~/.bashrc
+# RUN printf "eval \"\$(oh-my-posh --init --shell bash --config ~/.poshthemes/amro.omp.json)\"" >> ~/.bashrc
 USER root
 
 # clean cache
