@@ -14,7 +14,7 @@ RUN apt install -y sudo vim
 RUN apt install -y net-tools inetutils-ping
 RUN apt install -y wget curl
 RUN apt install -y tree
-RUN apt install -y lbzip2 bzip2
+RUN apt install -y lbzip2 bzip2 unzip
 RUN apt install -y git
 RUN apt install -y xz-utils
 RUN apt install -y bash-completion
@@ -35,6 +35,19 @@ RUN apt install -y openssh-server
 RUN useradd --create-home --no-log-init --shell /bin/bash ${user} \
     && usermod -aG sudo ${user} \
     && echo "${user}:${user}" | chpasswd
+
+# oh-my-posh
+RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+RUN chmod +x /usr/local/bin/oh-my-posh
+
+USER ${user}
+RUN mkdir ~/.poshthemes
+RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
+RUN unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
+RUN chmod u+rw ~/.poshthemes/*.omp.*
+RUN rm ~/.poshthemes/themes.zip
+RUN printf "eval \"\$(oh-my-posh --init --shell bash --config ~/.poshthemes/amro.omp.json)\"" >> ~/.bashrc
+USER root
 
 # clean cache
 RUN apt clean
