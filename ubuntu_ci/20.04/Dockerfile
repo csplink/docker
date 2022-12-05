@@ -14,7 +14,7 @@ RUN apt install -y sudo vim
 RUN apt install -y net-tools inetutils-ping
 RUN apt install -y wget curl
 RUN apt install -y tree
-RUN apt install -y lbzip2 bzip2
+RUN apt install -y lbzip2 bzip2 unzip
 RUN apt install -y git
 RUN apt install -y xz-utils
 RUN apt install -y bash-completion
