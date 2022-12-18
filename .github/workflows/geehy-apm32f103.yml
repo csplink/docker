@@ -1,4 +1,4 @@
-name: geehy-apm32f103
+name: 👷 geehy-apm32f103
 
 on: 
   push:
@@ -18,22 +18,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: checkout
+      - name: ⬇️ checkout
         uses: actions/checkout@v3
 
-      - name: set up qemu
+      - name: ⬇️ set up qemu
         uses: docker/setup-qemu-action@v2
 
-      - name: set up docker buildx
+      - name: ⬇️ set up docker buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: login to docker hub
+      - name: 🔰 login to docker hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: build
+      - name: 👷 build
         uses: docker/build-push-action@v3
         if: github.ref_name != 'master'
         with:
@@ -41,7 +41,7 @@ jobs:
           file: ./geehy/apm32f103/Dockerfile
           tags: csplink/geehy:apm32f103
 
-      - name: build and push
+      - name: 👷 build and push
         uses: docker/build-push-action@v3
         if: github.ref_name == 'master'
         with:
@@ -50,7 +50,7 @@ jobs:
           file: ./geehy/apm32f103/Dockerfile
           tags: csplink/geehy:apm32f103
 
-      - name: trigger repository_dispatch
+      - name: 🐒 trigger repository_dispatch
         if: github.ref_name == 'master'
         run: |
           curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/${{ github.repository }}/dispatches -d '{"event_type":"update-geehy-apm32f103","client_payload":{"text": "update geehy-apm32f103"}}'
