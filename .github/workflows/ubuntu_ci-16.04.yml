@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: 👷 build 
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: github.ref_name != 'master'
         with:
           context: ubuntu_ci/16.04
@@ -40,7 +40,7 @@ jobs:
           tags: csplink/ubuntu_ci:16.04
 
       - name: 👷 build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: github.ref_name == 'master'
         with:
           push: true
