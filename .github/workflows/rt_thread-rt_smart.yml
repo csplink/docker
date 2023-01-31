@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: 👷 build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: github.ref_name != 'master'
         with:
           context: rt_thread/rt_smart
@@ -38,7 +38,7 @@ jobs:
           tags: csplink/rt_thread:rt_smart
 
       - name: 👷 build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         if: github.ref_name == 'master'
         with:
           push: true
