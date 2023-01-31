@@ -54,57 +54,57 @@
             <img src="https://img.shields.io/badge/video-bilibili-FB7299?style=flat" alt="bilibili" />
         </a>
     </div>
-    <b>CSP: Tools for flexible configuration of chips and boards.</b><br/>
-    <i>DockerFile commonly used in csplink</i><br/>
+    <b>CSP：用于灵活配置芯片与板卡的工具</b><br/>
+    <i>csplink 中常用的 DockerFile</i><br/>
 </div>
 
-**English** | [中文](README-zh_CN.md)
+[English](README.md) | **中文**
 
-## ✨ Features
+## ✨ 特性
 
-- 👷 CI builds automatically
-- ☁️ Sync to DockerHub
+- 👷 CI 自动构建
+- ☁️ 同步至 DockerHub
 
-## Build
+## 构建
 
-> in the corresponding directory:
+> 对应目录下：
 
 ```shell
 docker build -f ./Dockerfile -t test:tag .
 ```
 
-## Run
+## 运行
 
-### no mounted directory
+### 不挂载目录
 
 ```shell
 docker run --name test -p 10000:22 -itd test:tag
 ```
 
-### mounted directory
+### 挂载目录
 
 ```shell
 docker run --name test -p 10000:22 -v ~:/home/csplink -itd test:tag
 ```
 
-## Exec
+## 执行
 
 ```shell
 docker exec -it test /bin/bash
 ```
 
-### Mirror
+### 镜像
 
-> sometimes we need to switch to the mirror of the local service
+> 有时候我们需要切换到本地服务的镜像
 
-#### huaweicloud
+#### 华为云
 
 ```shell
 sed -i 's/archive.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list;
 sed -i 's/security.ubuntu.com/repo.huaweicloud.com/g' /etc/apt/sources.list;
 ```
 
-#### aliyun
+#### 阿里云
 
 ```shell
 sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list;
