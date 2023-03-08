@@ -5,10 +5,6 @@ on:
     paths:
       - 'geehy/apm32f103/**'
       - '.github/workflows/geehy-apm32f103.yml'
-  pull_request:
-    paths:
-      - 'geehy/apm32f103/**'
-      - '.github/workflows/geehy-apm32f103.yml'
   workflow_dispatch:
   repository_dispatch:
     types: [update-ubuntu_ci-22.04]

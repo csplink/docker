@@ -5,10 +5,6 @@ on:
     paths:
       - 'rt_thread/rt_smart/**'
       - '.github/workflows/rt_thread-rt_smart.yml'
-  pull_request:
-    paths:
-      - 'rt_thread/rt_smart/**'
-      - '.github/workflows/rt_thread-rt_smart.yml'
   workflow_dispatch:
   repository_dispatch:
     types: [update-ubuntu_ci-22.04]
